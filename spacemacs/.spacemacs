@@ -39,6 +39,9 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (java :variables java-backend 'lsp)
+     (plantuml :variables
+               plantuml-jar-path "~/emacs-custom-packages/plantuml/plantuml.jar"
+               org-plantuml-jar-path "~/emacs-custom-packages/plantuml/plantuml.jar")
      lsp
      dap
      (python :variables python-backend 'lsp python-lsp-server 'pyright)
