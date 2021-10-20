@@ -585,7 +585,9 @@ before packages are loaded."
      (plantuml . t)
      (java . t)
      (python . t)
-     (dot . t))))
+     (dot . t)
+     (c . t)
+     (cpp . t))))
 
 
 ;; Do not write anything past this comment. This is where Emacs will
