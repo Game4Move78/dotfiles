@@ -59,6 +59,7 @@ This function should only modify configuration layer settings."
      ;; markdown
      multiple-cursors
      (org :variables
+          org-ditaa-jar-path "~/emacs-custom-packages/ditaa/ditaa0_9.jar"
           org-enable-roam-support t
           org-enable-github-support t
           org-projectile-file "TODOs.org"
