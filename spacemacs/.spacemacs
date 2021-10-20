@@ -558,9 +558,7 @@ This function is called only while dumping Spacemacs configuration. You can
 dump.")
 
 
-(defun dotspacemacs/user-config (org-noter
-                                 org-ql
-                                 helm-org-ql)
+(defun dotspacemacs/user-config ()
   "Configuration for user code:
 This function is called at the very end of Spacemacs startup, after layer
 configuration.
