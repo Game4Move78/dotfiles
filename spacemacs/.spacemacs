@@ -38,6 +38,8 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     (bibtex :variables
+             bibtex-enable-ebib-support t)
      (java :variables java-backend 'lsp)
      (plantuml :variables
                plantuml-jar-path "~/emacs-custom-packages/plantuml/plantuml.jar"
