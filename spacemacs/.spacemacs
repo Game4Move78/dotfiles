@@ -587,8 +587,7 @@ before packages are loaded."
      (java . t)
      (python . t)
      (dot . t)
-     (c . t)
-     (cpp . t))))
+     (C . t))))
 
 
 ;; Do not write anything past this comment. This is where Emacs will
