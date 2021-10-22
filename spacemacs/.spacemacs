@@ -288,7 +288,7 @@ It should only modify the values of Spacemacs settings."
    ;; Default font or prioritized list of fonts. The `:size' can be specified as
    ;; a non-negative integer (pixel size), or a floating-point (point size).
    ;; Point size is recommended, because it's device independent. (default 10.0)
-   dotspacemacs-default-font '("Source Code Pro"
+   dotspacemacs-default-font '("PragmataPro Liga"
                                :size 10.0
                                :weight normal
                                :width normal)
@@ -590,6 +590,10 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (require 'pragmatapro-lig)
+  ;; Enable pragmatapro-lig-mode for specific modes
+  (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
+  (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
   (setq org-noter-separate-notes-from-heading t)
   (require 'ox-latex)
   (org-babel-do-load-languages

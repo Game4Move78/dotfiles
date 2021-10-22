@@ -1,3 +1,6 @@
 [submodule "spacemacs/spacemacs-table-manipulation-layer"]
 	path = spacemacs/.emacs.d/private/table-manipulation
 	url = https://github.com/mickaushy/spacemacs-table-manipulation-layer.git
+[submodule "spacemacs/.emacs.d/private/local/emacs-pragmatapro-ligatures"]
+	path = spacemacs/.emacs.d/private/local/pragmatapro-lig
+	url = https://github.com/lumiknit/emacs-pragmatapro-ligatures.git
