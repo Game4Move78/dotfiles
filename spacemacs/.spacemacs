@@ -3,6 +3,7 @@
 ;; It must be stored in your home directory.
 
 (defun dotspacemacs/layers ()
+  
   "Layer configuration:
 This function should only modify configuration layer settings."
   (setq-default
@@ -39,7 +40,10 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      (bibtex :variables
-             bibtex-enable-ebib-support t)
+             bibtex-enable-ebib-support t
+             bibtex-completion-bibliography (expand-file-name "~/notes/Org/references.bib")
+             bibtex-completion-pdf-field "file"
+             org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex)
      (java :variables java-backend 'lsp)
      (plantuml :variables
                plantuml-jar-path "~/emacs-custom-packages/plantuml/plantuml.jar"
@@ -61,8 +65,14 @@ This function should only modify configuration layer settings."
      ;; markdown
      multiple-cursors
      (org :variables
+          org-directory (expand-file-name "~/notes/Org/")
+          org-default-notes-file (concat org-directory "/inbox.org")
           org-ditaa-jar-path "~/emacs-custom-packages/ditaa/ditaa0_9.jar"
           org-enable-roam-support t
+          org-enable-roam-protocol t
+          org-roam-v2-ack t
+          org-roam-directory (concat org-directory "/roam")
+          org-roam-db-location (concat org-roam-directory "/db/org-roam.db")
           org-enable-github-support t
           org-projectile-file "TODOs.org"
           org-enable-org-journal-support t
@@ -92,8 +102,14 @@ This function should only modify configuration layer settings."
    ;; `dotspacemacs/user-config'. To use a local version of a package, use the
    ;; `:location' property: '(your-package :location "~/path/to/your-package/")
    ;; Also include the dependencies as they will not be resolved automatically.
-   dotspacemacs-additional-packages '(org-noter
-                                      ;; org-noter-pdftools
+   dotspacemacs-additional-packages '(org-roam-bibtex
+                                      org-noter
+                                      org-noter-pdftools
+                                      websocket
+                                      simple-httpd
+                                      (org-roam-ui :location (recipe :fetcher github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+                                      (pragmatapro-lig :location local)
+                                      ;; (pragmatapro-lig :location (recipe :fetcher github :repo "lumiknit/emacs-pragmatapro-ligatures" :files ("*.el" "out")))
                                       ;; org-ql
                                       ;; helm-org-ql
                                       )
@@ -574,11 +590,7 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
-  (setq org-noter-default-notes-file-names '("notes.org")
-        org-noter-separate-notes-from-heading t)
-  (setq org-ref-bibliography-notes "~/notes/bibliography/notes.org"
-        org-ref-default-bibliography '("~/notes/bibliography/references.bib")
-        org-ref-pdf-directory "~/notes/bibliography/bibtex-pdfs/")
+  (setq org-noter-separate-notes-from-heading t)
   (require 'ox-latex)
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -587,7 +599,45 @@ before packages are loaded."
      (java . t)
      (python . t)
      (dot . t)
-     (C . t))))
+     (C . t)))
+  (use-package org-roam-bibtex
+    :after org-roam
+    :hook (org-roam-mode . org-roam-bibtex-mode)
+    :custom
+    (orb-preformat-keywords '("citekey" "title" "url" "author-or-editor" "keywords" "file"))
+    (orb-process-file-keyword t)
+    (orb-file-field-extensions '("pdf" "epub" "html"))
+    (orb-templates
+     '(("r" "ref" plain (function org-roam-capture--get-point)
+        ""
+        :file-name "${citekey}"
+        :head "#+TITLE: ${citekey}: ${title}
+#+ROAM_KEY: ${ref}
+
+- tags ::
+- keywords :: ${keywords}
+
+* ${title}
+  :PROPERTIES:
+  :Custom_ID: ${citekey}
+  :URL: ${url}
+  :AUTHOR: ${author-or-editor}
+  :NOTER_DOCUMENT: ${file}
+  :NOTER_PAGE:
+  :END:")))
+
+  (use-package org-pdftools
+    :hook (org-load . org-pdftools-setup-link))
+
+  (use-package org-noter
+    :after (:any org pdf-view)
+    :custom (org-noter-always-create-frame nil))
+
+  (use-package org-noter-pdftools
+    :after org-noter
+    :config
+    (with-eval-after-load 'pdf-annot
+      (add-hook 'pdf-annot-activate-handler-functions #'org-noter-pdftools-jump-to-note)))))
 
 
 ;; Do not write anything past this comment. This is where Emacs will
@@ -603,7 +653,22 @@ This function is called at the very end of Spacemacs initialization."
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(bibtex-completion parsebib biblio biblio-core plantuml-mode yapfify sphinx-doc pytest pyenv-mode pydoc py-isort poetry pippel pipenv pyvenv pip-requirements nose lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda blacken anaconda-mode pythonic pdf-view-restore org-noter-pdftools org-pdftools pdf-tools tablist org-noter dap-mode bui csv-mode ox-gfm org-roam org-journal lsp-latex company-reftex company-math math-symbol-lists company-auctex auctex-latexmk auctex ediprolog yasnippet-snippets xterm-color vterm unfill treemacs-magit terminal-here smeargle shell-pop orgit-forge orgit org-rich-yank org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-contrib org-cliplink mwim multi-term lsp-ui lsp-treemacs lsp-origami origami htmlize helm-org-rifle helm-lsp lsp-mode helm-gitignore helm-git-grep helm-company helm-c-yasnippet gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe fringe-helper git-gutter fuzzy forge yaml markdown-mode magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor transient flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip evil-org eshell-z eshell-prompt-extras esh-help company browse-at-remote auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async)))
+   '(bibtex-completion parsebib biblio biblio-core plantuml-mode yapfify sphinx-doc pytest pyenv-mode pydoc py-isort poetry pippel pipenv pyvenv pip-requirements nose lsp-python-ms lsp-pyright live-py-mode importmagic epc ctable concurrent deferred helm-pydoc cython-mode company-anaconda blacken anaconda-mode pythonic pdf-view-restore org-noter-pdftools org-pdftools pdf-tools tablist org-noter dap-mode bui csv-mode ox-gfm org-roam org-journal lsp-latex company-reftex company-math math-symbol-lists company-auctex auctex-latexmk auctex ediprolog yasnippet-snippets xterm-color vterm unfill treemacs-magit terminal-here smeargle shell-pop orgit-forge orgit org-rich-yank org-projectile org-category-capture org-present org-pomodoro alert log4e gntp org-mime org-download org-contrib org-cliplink mwim multi-term lsp-ui lsp-treemacs lsp-origami origami htmlize helm-org-rifle helm-lsp lsp-mode helm-gitignore helm-git-grep helm-company helm-c-yasnippet gnuplot gitignore-templates gitignore-mode gitconfig-mode gitattributes-mode git-timemachine git-messenger git-link git-gutter-fringe fringe-helper git-gutter fuzzy forge yaml markdown-mode magit ghub closql emacsql-sqlite emacsql treepy magit-section git-commit with-editor transient flyspell-correct-helm flyspell-correct flycheck-pos-tip pos-tip evil-org eshell-z eshell-prompt-extras esh-help company browse-at-remote auto-yasnippet yasnippet auto-dictionary ac-ispell auto-complete ws-butler writeroom-mode visual-fill-column winum volatile-highlights vi-tilde-fringe uuidgen undo-tree treemacs-projectile treemacs-persp treemacs-icons-dired treemacs-evil treemacs cfrs pfuture posframe toc-org symon symbol-overlay string-inflection string-edit spaceline-all-the-icons memoize all-the-icons spaceline powerline restart-emacs request rainbow-delimiters quickrun popwin persp-mode password-generator paradox spinner overseer org-superstar open-junk-file nameless multi-line shut-up macrostep lorem-ipsum link-hint inspector info+ indent-guide hungry-delete hl-todo highlight-parentheses highlight-numbers parent-mode highlight-indentation helm-xref helm-themes helm-swoop helm-purpose window-purpose imenu-list helm-projectile helm-org helm-mode-manager helm-make helm-ls-git helm-flx helm-descbinds helm-ag google-translate golden-ratio flycheck-package package-lint flycheck pkg-info epl flycheck-elsa flx-ido flx fancy-battery eyebrowse expand-region evil-visualstar evil-visual-mark-mode evil-unimpaired f evil-tutor evil-textobj-line evil-surround evil-numbers evil-nerd-commenter evil-mc evil-matchit evil-lisp-state evil-lion evil-indent-plus evil-iedit-state evil-goggles evil-exchange evil-escape evil-ediff evil-easymotion evil-collection annalist evil-cleverparens smartparens evil-args evil-anzu anzu eval-sexp-fu emr iedit clang-format projectile paredit list-utils elisp-slime-nav editorconfig dumb-jump s drag-stuff dired-quick-sort define-word column-enforce-mode clean-aindent-mode centered-cursor-mode auto-highlight-symbol ht dash auto-compile packed aggressive-indent ace-window ace-link ace-jump-helm-line helm avy helm-core popup which-key use-package pcre2el hydra lv hybrid-mode font-lock+ evil goto-chg dotenv-mode diminish bind-map bind-key async))
+ '(safe-local-variable-values
+   '((eval progn
+           (setq-local org-roam-directory
+                       (locate-dominating-file default-directory ".dir-locals.el"))
+           (setq-local org-roam-db-location
+                       (concat org-roam-directory "org-roam.db"))
+           (setq-local bibtex-completion-bibliography
+                       (concat org-roam-directory "references.bib")))
+     (eval progn
+           (setq-local org-roam-directory
+                       (locate-dominating-file default-directory ".dir-locals.el"))
+           (setq-local org-roam-db-location
+                       (concat org-roam-directory "org-roam.db")))
+     (org-roam-db-location expand-file-name "./org-roam.db")
+     (org-roam-directory expand-file-name "."))))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
