@@ -67,7 +67,9 @@ This function should only modify configuration layer settings."
      auto-completion
      better-defaults
      emacs-lisp
-     git
+     (git :variables
+          git-enable-magit-delta-plugin t
+          git-enable-magit-todos-plugin t)
      helm
      ;; markdown
      multiple-cursors
