@@ -1,2 +1,5 @@
 # dotfiles
-stow -R spacemacs
+
+Invoke `git submodule update --init --recursive` first to install submodules
+
+Example usage: `stow -R spacemacs`
