@@ -5,26 +5,26 @@
 	path = spacemacs/.emacs.d/private/local/pragmatapro-lig
 	url = https://github.com/lumiknit/emacs-pragmatapro-ligatures.git
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/zsh-autosuggestions"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/zsh-autosuggestions
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-autosuggestions
 	url = https://github.com/zsh-users/zsh-autosuggestions
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/zsh-vi-mode"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/zsh-vi-mode
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-vi-mode
 	url = https://github.com/jeffreytse/zsh-vi-mode
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/clipboard"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/clipboard
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/clipboard
 	url = https://github.com/zpm-zsh/clipboard.git
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/zsh-syntax-highlighting"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/zsh-syntax-highlighting
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-syntax-highlighting
 	url = https://github.com/zsh-users/zsh-syntax-highlighting.git
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/k"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/k
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/k
 	url = https://github.com/supercrabtree/k
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/alias-tips"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/alias-tips
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/alias-tips
 	url = https://github.com/djui/alias-tips.git
 [submodule "oh-my-zsh/.oh-my-zsh/plugins/you-should-use"]
-	path = oh-my-zsh/.oh-my-zsh/plugins/you-should-use
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/you-should-use
 	url = https://github.com/MichaelAquilina/zsh-you-should-use.git
 [submodule "oh-my-zsh/.oh-my-zsh/themes/powerlevel10k"]
-	path = oh-my-zsh/.oh-my-zsh/themes/powerlevel10k
+	path = oh-my-zsh/.oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
