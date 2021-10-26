@@ -1,0 +1,15 @@
+[user]
+	name = Patrick Lenihan
+	email = sc17pl@leeds.ac.uk
+[credential "https://github.com"]
+	helper = 
+	helper = !/usr/bin/gh auth git-credential
+[color]
+	ui = false
+[pager]
+    diff = delta
+    log = delta
+    reflog = delta
+    show = delta
+[interactive]
+    diffFilter = delta --color-only --features=interactive
