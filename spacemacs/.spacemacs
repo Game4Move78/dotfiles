@@ -39,6 +39,7 @@ This function should only modify configuration layer settings."
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
+     ;; (unicode-fonts :variables unicode-fonts-enable-ligatures t)
      (bibtex :variables
              bibtex-enable-ebib-support t
              bibtex-completion-bibliography (expand-file-name "~/notes/Org/references.bib")
@@ -590,10 +591,46 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  ;; Pragmata Pro minor mode
+  ;; ------------
   (require 'pragmatapro-lig)
   ;; Enable pragmatapro-lig-mode for specific modes
   (add-hook 'text-mode-hook 'pragmatapro-lig-mode)
   (add-hook 'prog-mode-hook 'pragmatapro-lig-mode)
+  ;; Pragmata Pro
+  ;; ------------
+  ;; (ligature-set-ligatures 'prog-mode
+  ;; '("[ERROR]" "[DEBUG]" "[INFO]" "[WARN]" "[WARNING]"
+  ;;   "[ERR]" "[FATAL]" "[TRACE]" "[FIXME]" "[TODO]"
+  ;;   "[BUG]" "[NOTE]" "[HACK]" "[MARK]"
+  ;;   "# ERROR" "# DEBUG" "# INFO" "# WARN" "# WARNING"
+  ;;   "# ERR" "# FATAL" "# TRACE" "# FIXME" "# TODO"
+  ;;   "# BUG" "# NOTE" "# HACK" "# MARK"
+  ;;   "// ERROR" "// DEBUG" "// INFO" "// WARN" "// WARNING"
+  ;;   "// ERR" "// FATAL" "// TRACE" "// FIXME" "// TODO"
+  ;;   "// BUG" "// NOTE" "// HACK" "// MARK"
+  ;;   "!!" "!=" "!==" "!!!" "!≡" "!≡≡" "!>" "!=<" "#("
+  ;;   "#_" "#{" "#?" "#>" "##" "#_(" "%=" "%>" "%>%" "%<%"
+  ;;   "&%" "&&" "&*" "&+" "&-" "&/" "&=" "&&&" "&>" "$>"
+  ;;   "***" "*=" "*/" "*>" "++" "+++" "+=" "+>" "++=" "--"
+  ;;   "-<" "-<<" "-=" "->" "->>" "---" "-->" "-+-" "-\\/"
+  ;;   "-|>" "-<|" ".." "..." "..<" ".>" ".~" ".=" "/*" "//"
+  ;;   "/>" "/=" "/==" "///" "/**" ":::" "::" ":=" ":≡" ":>"
+  ;;   ":=>" ":(" ":-(" ":)" ":-)" ":/" ":\\" ":3" ":D" ":P"
+  ;;   ":>:" ":<:" "<$>" "<*" "<*>" "<+>" "<-" "<<" "<<<" "<<="
+  ;;   "<=" "<=>" "<>" "<|>" "<<-" "<|" "<=<" "<~" "<~~" "<<~"
+  ;;   "<$" "<+" "<!>" "<@>" "<#>" "<%>" "<^>" "<&>" "<?>" "<.>"
+  ;;   "</>" "<\\>" "<\">" "<:>" "<~>" "<**>" "<<^" "<!" "<@"
+  ;;   "<#" "<%" "<^" "<&" "<?" "<." "</" "<\\" "<\"" "<:" "<->"
+  ;;   "<!--" "<--" "<~<" "<==>" "<|-" "<<|" "<-<" "<-->" "<<=="
+  ;;   "<==" "=<<" "==" "===" "==>" "=>" "=~" "=>>" "=/=" "=~="
+  ;;   "==>>" "≡≡" "≡≡≡" "≡:≡" ">-" ">=" ">>" ">>-" ">>=" ">>>"
+  ;;   ">=>" ">>^" ">>|" ">!=" ">->" "??" "?~" "?=" "?>" "???"
+  ;;   "?." "^=" "^." "^?" "^.." "^<<" "^>>" "^>" "\\\\" "\\>"
+  ;;   "\\/-" "@>" "|=" "||" "|>" "|||" "|+|" "|->" "|-->" "|=>"
+  ;;   "|==>" "|>-" "|<<" "||>" "|>>" "|-" "||-" "~=" "~>" "~~>"
+  ;;   "~>>" "[[" "]]" "\">" "_|_"))
+
   (setq org-noter-separate-notes-from-heading t)
   (require 'ox-latex)
   (org-babel-do-load-languages
