@@ -103,7 +103,7 @@ plugins=(
 	github
 	dotenv
 	github
-  	zsh-bitwarden
+	zsh-bitwarden
 )
 
 source $ZSH/oh-my-zsh.sh
