@@ -40,6 +40,12 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; (unicode-fonts :variables unicode-fonts-enable-ligatures t)
+     (mu4e :variables
+           message-send-mail-function   'smtpmail-send-it
+           smtpmail-smtp-server         "smtp-mail.outlook.com"
+           smtpmail-local-domain         "outlook.com"
+           smtpmail-smtp-service 587
+           smtpmail-stream-type 'ssl)
      (bibtex :variables
              bibtex-enable-ebib-support t
              bibtex-completion-bibliography (expand-file-name "~/notes/Org/references.bib")
