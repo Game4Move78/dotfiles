@@ -28,3 +28,6 @@
 [submodule "oh-my-zsh/.oh-my-zsh/themes/powerlevel10k"]
 	path = oh-my-zsh/.oh-my-zsh/custom/themes/powerlevel10k
 	url = https://github.com/romkatv/powerlevel10k.git
+[submodule "oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-bitwarden"]
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-bitwarden
+	url = https://github.com/Game4Move78/zsh-bitwarden.git

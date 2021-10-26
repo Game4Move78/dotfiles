@@ -103,6 +103,7 @@ plugins=(
 	github
 	dotenv
 	github
+  	zsh-bitwarden
 )
 
 source $ZSH/oh-my-zsh.sh
@@ -144,42 +145,6 @@ export EDITOR=$(which vi)
 # Example aliases
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
-function bw-search() {
-	  if [ -n "$1" ]
-	  then
-        if [ -n "$2" ]
-        then
-            username=$2
-        else
-            echo "Enter username"
-            select username in $(bw list items --search $1 | jq -r ".[].login.username")
-            do
-                echo "Selected $username"
-	              break;
-            done
-        fi
-		    searchout=$(bw list items --search "$1")
-		    if ! echo "$searchout" | jq -re ".[].login | select(.username == \"$username\") | .password"
-		    then
-			      echo "Username $2 not found. Choices:"
-			      echo "$searchout" | jq -r ".[].login.username"
-			      return 2
-		    fi
-	  else
-		    echo "Usage: bw-search [key] [value]" 
-		    return 1
-	  fi
-}
-function bw-unlock() {
-	if [ -z ${BW_SESSION+1} ]
-	then
-		export BW_SESSION="$(bw unlock --raw)"
-       	fi
-}
-alias bws='bw-search'
-alias bwu='bw-unlock'
-alias bwpwd='bwu && bw get password'
-alias bwusr='bwu && bw get username'
 alias xv='expressvpn'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
