@@ -104,20 +104,15 @@ plugins=(
 	dotenv
 	github
 	zsh-bitwarden
+	virtualenvwrapper
+	fzf
 )
 
 source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-export PATH=~/.npm-global/bin:$PATH
-export PATH=~/LADR-2009-11A/bin:$PATH
-export PATH=~/clangd_12.0.1/bin:$PATH
-export PATH=~/apache-maven-3.8.3/bin:$PATH
 eval "$(bw completion --shell zsh); compdef _bw bw;"
-export MOZ_ENABLE_WAYLAND=1
-export JAVA_HOME=$(dirname $(dirname $(readlink $(readlink $(which javac)))))
-export EDITOR=$(which vi)
 
 # Disable SSH_ASKPASS
 # unset SSH_ASKPASS
@@ -149,3 +144,5 @@ alias xv='expressvpn'
 
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
