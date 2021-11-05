@@ -104,6 +104,7 @@ plugins=(
 	dotenv
 	github
 	zsh-bitwarden
+	zsh-spack
 	virtualenvwrapper
 	fzf
 )
@@ -146,3 +147,4 @@ alias xv='expressvpn'
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+
