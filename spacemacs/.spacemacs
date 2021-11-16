@@ -89,6 +89,7 @@ This function should only modify configuration layer settings."
           org-enable-org-journal-support t
           org-journal-dir "~/notes/Org/Shared/journal/"
           org-journal-file-format "%Y%m%d.org"
+          org-journal-enable-agenda-integration t
           org-image-actual-width 450
           org-latex-pdf-process '("xelatex -interaction nonstopmode %f"
                                   "xelatex -interaction nonstopmode %f")
