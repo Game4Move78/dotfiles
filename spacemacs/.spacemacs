@@ -40,6 +40,7 @@ This function should only modify configuration layer settings."
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; (unicode-fonts :variables unicode-fonts-enable-ligatures t)
+     prolog
      (mu4e :variables
            message-send-mail-function   'smtpmail-send-it
            smtpmail-smtp-server         "smtp-mail.outlook.com"
@@ -117,6 +118,7 @@ This function should only modify configuration layer settings."
                                       websocket
                                       simple-httpd
                                       (org-roam-ui :location (recipe :fetcher github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
+                                      (ob-prolog :location (recipe :fetcher github :repo "ljos/ob-prolog" :files ("*.el" "out")))
                                       (pragmatapro-lig :location local)
                                       ;; (pragmatapro-lig :location (recipe :fetcher github :repo "lumiknit/emacs-pragmatapro-ligatures" :files ("*.el" "out")))
                                       ;; org-ql
@@ -648,7 +650,8 @@ before packages are loaded."
      (java . t)
      (python . t)
      (dot . t)
-     (C . t)))
+     (C . t)
+     (prolog . t)))
   (use-package org-roam-bibtex
     :after org-roam
     :hook (org-roam-mode . org-roam-bibtex-mode)
