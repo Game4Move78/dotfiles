@@ -50,7 +50,7 @@ This function should only modify configuration layer settings."
            smtpmail-stream-type 'ssl)
      (bibtex :variables
              bibtex-enable-ebib-support t
-             bibtex-completion-bibliography (expand-file-name "~/notes/Org/references.bib")
+             bibtex-completion-bibliography (expand-file-name "~/notes/org/references.bib")
              bibtex-completion-pdf-field "file"
              org-ref-get-pdf-filename-function 'org-ref-get-pdf-filename-helm-bibtex)
      (java :variables java-backend 'lsp)
@@ -76,7 +76,7 @@ This function should only modify configuration layer settings."
      ;; markdown
      multiple-cursors
      (org :variables
-          org-directory (expand-file-name "~/notes/Org/")
+          org-directory (expand-file-name "~/notes/org/")
           org-default-notes-file (concat org-directory "/inbox.org")
           org-ditaa-jar-path "~/emacs-custom-packages/ditaa/ditaa0_9.jar"
           org-enable-roam-support t
@@ -87,7 +87,7 @@ This function should only modify configuration layer settings."
           org-enable-github-support t
           org-projectile-file "TODOs.org"
           org-enable-org-journal-support t
-          org-journal-dir "~/notes/Org/Shared/journal/"
+          org-journal-dir "~/notes/org/journal/"
           org-journal-file-format "%Y%m%d.org"
           org-journal-enable-agenda-integration t
           org-image-actual-width 450
