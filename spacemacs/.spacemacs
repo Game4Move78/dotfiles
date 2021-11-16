@@ -41,6 +41,7 @@ This function should only modify configuration layer settings."
      ;; ----------------------------------------------------------------
      ;; (unicode-fonts :variables unicode-fonts-enable-ligatures t)
      prolog
+     finance
      (mu4e :variables
            message-send-mail-function   'smtpmail-send-it
            smtpmail-smtp-server         "smtp-mail.outlook.com"
