@@ -143,6 +143,34 @@ eval "$(bw completion --shell zsh); compdef _bw bw;"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias xv='expressvpn'
 
+bw-new-codes() {
+  local codes=$(ssh $DEVICE_IP -p 8022 "termux-sms-list | jq -r '.[]"\
+                    "| select(.number==\"DUOSEC\") | .body' | cut -d' ' -f3- "\
+                    "| tail -1")
+  bwnoe DUOSEC <<< "$codes"
+}
+
+bw-pop-duocode() {
+  bwno DUOSEC | awk '{$1=""; print $0}' | bwnoe DUOSEC | awk '{print $1}'
+}
+
+bw-duocode() {
+  local code=$(bw-pop-duocode)
+  clipcopy <<< $code
+  echo "Copied code to clipboard"
+  if grep '^\W*5' <<< $code; then
+    echo -n "Last duosec code. Loading new codes in... "
+    for ((i = 1; i <= 3; i++)); do
+      sleep 1
+      echo -n "${i}... "
+    done
+    echo
+    bw-new-codes
+  fi
+}
+
+alias bwduo='bw-duocode'
+
 # To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
