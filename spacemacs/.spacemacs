@@ -722,6 +722,7 @@ This function is called at the very end of Spacemacs initialization."
                        (concat org-roam-directory "org-roam.db")))
      (org-roam-db-location expand-file-name "./org-roam.db")
      (org-roam-directory expand-file-name "."))))
+ '(sh-basic-offset 2))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.
