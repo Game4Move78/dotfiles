@@ -107,6 +107,7 @@ plugins=(
 	zsh-spack
 	virtualenvwrapper
 	fzf
+	emacs
 )
 
 source $ZSH/oh-my-zsh.sh
