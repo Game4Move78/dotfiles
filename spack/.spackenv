@@ -1,0 +1,5 @@
+. $HOME/spack/share/spack/setup-env.sh
+
+spacktivate base
+
+export PATH=$SPACK_ROOT/var/spack/environments/base/.spack-env/view/bin:$PATH
