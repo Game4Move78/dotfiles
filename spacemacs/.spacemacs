@@ -34,13 +34,16 @@ This function should only modify configuration layer settings."
 
    ;; List of configuration layers to load.
    dotspacemacs-configuration-layers
-   '(
+   '(typescript
+     systemd
      ;; ----------------------------------------------------------------
      ;; Example of useful layers you may want to use right away.
      ;; Uncomment some layer names and press `SPC f e R' (Vim style) or
      ;; `M-m f e R' (Emacs style) to install them.
      ;; ----------------------------------------------------------------
      ;; (unicode-fonts :variables unicode-fonts-enable-ligatures t)
+     (javascript :variables
+                 javascript-backend 'lsp)
      prolog
      finance
      (mu4e :variables
@@ -71,7 +74,7 @@ This function should only modify configuration layer settings."
      (c-c++ :variables c-c++-backend 'lsp-clangd)
      table-manipulation
      pdf
-     latex
+     (latex :variables latex-enable-auto-fill nil)
      csv
      prolog
      auto-completion
@@ -130,6 +133,7 @@ This function should only modify configuration layer settings."
                                       (org-roam-ui :location (recipe :fetcher github :repo "org-roam/org-roam-ui" :files ("*.el" "out")))
                                       (ob-prolog :location (recipe :fetcher github :repo "ljos/ob-prolog" :files ("*.el" "out")))
                                       (pragmatapro-lig :location local)
+                                      (activity-watch-mode :location (recipe :fetcher github :repo "pauldub/activity-watch-mode" :files ("*.el" "out")))
                                       ;; (pragmatapro-lig :location (recipe :fetcher github :repo "lumiknit/emacs-pragmatapro-ligatures" :files ("*.el" "out")))
                                       ;; org-ql
                                       ;; helm-org-ql
@@ -663,6 +667,8 @@ This function is called at the very end of Spacemacs startup, after layer
 configuration.
 Put your configuration code here, except for variables that should be set
 before packages are loaded."
+  (require 'activity-watch-mode)
+  (global-activity-watch-mode)
 
   (setq send-mail-function 'smtpmail-send-it)    ; should not be modified
   (setq smtpmail-smtp-server "127.0.0.1") ; host running SMTP server
@@ -686,10 +692,17 @@ before packages are loaded."
   (require 'pragmatapro-lig)
   ;; Enable pragmatapro-lig-mode for specific modes
 
-  (setq word-wrap t)
-  (global-visual-line-mode t)
-  (add-hook 'text-mode-hook #'visual-fill-column-mode)
-  (setq visual-fill-column-center-text t)
+  ;; (setq word-wrap t)
+  ;; (global-visual-line-mode t)
+
+  ;; (add-hook 'text-mode-hook #'visual-fill-column-mode)
+  ;; (add-hook 'text-mode-hook
+  ;;           (lambda ()
+  ;;             (setq word-wrap t)
+  ;;             ))
+  ;; (global-visual-fill-column-mode)
+  ;; (setq-default word-wrap t)
+  ;; (setq-default visual-fill-column-center-text t)
 
   ;; Pragmata Pro minor mode
   ;; ------------
