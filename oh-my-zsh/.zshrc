@@ -82,7 +82,7 @@ plugins=(
 	common-aliases
 	mvn
 	aliases
-	git 
+	git
 	zsh-autosuggestions
 	zsh-syntax-highlighting
 	zsh-vi-mode
@@ -104,6 +104,7 @@ plugins=(
 	dotenv
 	github
 	zsh-bitwarden
+  bwjq
 	zsh-spack
 	virtualenvwrapper
 	fzf
@@ -114,7 +115,9 @@ source $ZSH/oh-my-zsh.sh
 
 # User configuration
 
-eval "$(bw completion --shell zsh); compdef _bw bw;"
+[ -f $HOME/.profile ] && source $HOME/.profile
+
+source $HOME/.zshenv
 
 # Disable SSH_ASKPASS
 # unset SSH_ASKPASS
@@ -140,40 +143,38 @@ eval "$(bw completion --shell zsh); compdef _bw bw;"
 # For a full list of active aliases, run `alias`.
 #
 # Example aliases
-# alias zshconfig="mate ~/.zshrc"
-# alias ohmyzsh="mate ~/.oh-my-zsh"
-alias xv='expressvpn'
+# alias zshconfig="mate $HOME/.zshrc"
+# alias ohmyzsh="mate $HOME/.oh-my-zsh"
 
-bw-new-codes() {
-  local codes=$(ssh $DEVICE_IP -p 8022 "termux-sms-list | jq -r '.[]"\
-                    "| select(.number==\"DUOSEC\") | .body' | cut -d' ' -f3- "\
-                    "| tail -1")
-  bwnoe DUOSEC <<< "$codes"
+emacs-eval() {
+  emacsclient -e "(print (substring-no-properties $1) #'external-debugging-output)" | sed 's/^"//; s/"$//; s/\\n/\n/g'
 }
 
-bw-pop-duocode() {
-  bwno DUOSEC | awk '{$1=""; print $0}' | bwnoe DUOSEC | awk '{print $1}'
+# To customize prompt, run `p10k configure` or edit $HOME/.p10k.zsh.
+[[ ! -f $HOME/.p10k.zsh ]] || source $HOME/.p10k.zsh
+
+DEBUG() {
+  printf "'%s'" "$1" >&2
+  for (( i=2; i<=$#; i+=1 )); do
+    printf " '%s'" "${argv[$i]}" >&2
+  done
+  echo >&2
 }
 
-bw-duocode() {
-  local code=$(bw-pop-duocode)
-  clipcopy <<< $code
-  echo "Copied code to clipboard"
-  if grep '^\W*5' <<< $code; then
-    echo -n "Last duosec code. Loading new codes in... "
-    for ((i = 1; i <= 3; i++)); do
-      sleep 1
-      echo -n "${i}... "
-    done
-    echo
-    bw-new-codes
-  fi
+DEBUG_RUN() {
+  DEBUG "$@" 2>&1 | clipcopy
+  "$@"
 }
 
-alias bwduo='bw-duocode'
+[ -f "/home/plenihan/.ghcup/env" ] && . "/home/plenihan/.ghcup/env" # ghcup-env
 
-# To customize prompt, run `p10k configure` or edit ~/.p10k.zsh.
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+if (( $+commands[bw] )); then
+  eval "$(bw completion --shell zsh)"
+  compdef _bw bw
+fi
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if (( $+commands[nvm] )); then
+  [[ -s "$NVM_DIR/bash_completion" ]] && source "$NVM_DIR/bash_completion"
+fi
 
+export EDITOR=vi
