@@ -31,3 +31,6 @@
 [submodule "oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-spack"]
 	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-spack
 	url = https://github.com/Game4Move78/zsh-spack.git
+[submodule "oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-release-fetcher"]
+	path = oh-my-zsh/.oh-my-zsh/custom/plugins/zsh-release-fetcher
+	url = https://github.com/Game4Move78/zsh-release-fetcher.git
