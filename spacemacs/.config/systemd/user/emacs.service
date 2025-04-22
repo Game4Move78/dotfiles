@@ -1,17 +1,14 @@
-## If your Emacs is installed in a non-standard location, you may need
-## to copy this file to a standard directory, eg ~/.config/systemd/user/ .
-## If you install this file by hand, change the "Exec" lines below
-## to use absolute file names for the executables.
 [Unit]
 Description=Emacs text editor
 Documentation=info:emacs man:emacs(1) https://gnu.org/software/emacs/
+After=graphical-session.target
 
 [Service]
 Type=simple
 ExecStart=bash --noprofile --norc %h/.config/systemd/user/emacs.sh
 ExecStop=/usr/bin/emacsclient --eval "(kill-emacs)"
 Restart=always
-TimeoutStartSec=0
+TimeoutStartSec=120
 
 # Emacs will exit with status 15 after having received SIGTERM, which
 # is the default "KillSignal" value systemd uses to stop services.
@@ -23,4 +20,4 @@ SuccessExitStatus=15
 Restart=on-failure
 
 [Install]
-WantedBy=default.target
+WantedBy=graphical-session.target
